@@ -1,0 +1,18 @@
+[project]
+name = "ChouetteBot"
+license = { text = "MIT License" }
+readme = "README.md"
+requires-python = ">=3.9"
+
+[tool.ruff]
+extend-exclude = ["venv39"]
+line-length = 99
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "RET", "SIM", "RUF", "T20", "ERA", "ASYNC"]
+ignore = ["E501"]
+
+[tool.ruff.format]
+indent-style = "space"
+line-ending = "lf"
+quote-style = "double"

@@ -1,0 +1,14 @@
+# include all
+*
+
+# exclude python files in app folder
+!UpdateNotifier/
+!UpdateNotifier/*.py
+
+# exclude repo files
+!.gitignore
+!README.md
+!LICENSE
+!requirements.txt
+!.env.example
+!pyproject.toml
