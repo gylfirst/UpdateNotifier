@@ -1,0 +1,13 @@
+---
+services:
+  updatenotifier:
+    image: gylfirst/updatenotifier:latest
+    container_name: updatenotifier
+    # Set the paths to the data and logs directories + the .env file
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./.env:/app/.env
+    restart: unless-stopped
+    # Set the interval in seconds to check for updates
+    command: "60"

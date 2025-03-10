@@ -1,0 +1,4 @@
+*
+!UpdateNotifier/**/*.py
+!requirements.txt
+!entrypoint.sh

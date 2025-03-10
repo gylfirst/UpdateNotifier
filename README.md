@@ -10,7 +10,7 @@ UpdateNotifier is a Python application that checks for the latest releases of sp
 
 ## Requirements
 
-- Python 3.9 or higher
+- Python 3.10 or higher
 - `aiohttp`
 - `asyncio`
 - `discord-webhook`
@@ -45,6 +45,8 @@ You better have a virtual environment for your python installation. See [here](h
 
 ## Usage
 
+### Python
+
 1. Add the GitHub repositories you want to monitor to the `data/services.txt` file. Each line should contain a repository in the format `owner/repo`.
 
 2. Run the application:
@@ -52,6 +54,11 @@ You better have a virtual environment for your python installation. See [here](h
     ```bash
     python -m UpdateNotifier
     ```
+
+### Docker
+
+You can use the [docker image](https://hub.docker.com/r/gylfirst/uptimenotifer) with the docker compose file.  
+You can edit the command argument to determine the time between the execution of the app. This time is in seconds.
 
 ## Configuration
 

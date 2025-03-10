@@ -12,3 +12,14 @@
 !requirements.txt
 !.env.example
 !pyproject.toml
+
+# exclude docker files
+!Dockerfile
+!.dockerignore
+!docker-compose.yaml.example
+!entrypoint.sh
+
+# exclude CI/CD files
+!.github/
+!.github/workflows/
+!.github/workflows/*.yaml
