@@ -1,5 +1,8 @@
 # UpdateNotifier
 
+[![Docker Image](https://github.com/gylfirst/UpdateNotifier/actions/workflows/docker-image.yaml/badge.svg?branch=main)](https://github.com/gylfirst/UpdateNotifier/actions/workflows/docker-image.yaml)
+[![Docker Image Version](https://img.shields.io/docker/v/gylfirst/updatenotifier?style=flat)](https://hub.docker.com/r/gylfirst/updatenotifier)
+
 UpdateNotifier is a Python application that checks for the latest releases of specified GitHub repositories and sends notifications to a Discord channel if new updates are found.
 
 ## Features
@@ -57,7 +60,7 @@ You better have a virtual environment for your python installation. See [here](h
 
 ### Docker
 
-You can use the [docker image](https://hub.docker.com/r/gylfirst/uptimenotifer) with the docker compose file.  
+You can use the [docker image](https://hub.docker.com/r/gylfirst/updatenotifier) with the docker compose file.  
 You can edit the command argument to determine the time between the execution of the app. This time is in seconds.
 
 ## Configuration
