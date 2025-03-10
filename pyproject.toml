@@ -1,5 +1,5 @@
 [project]
-name = "ChouetteBot"
+name = "UpdateNotifier"
 license = { text = "MIT License" }
 readme = "README.md"
 requires-python = ">=3.9"
