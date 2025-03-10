@@ -5,9 +5,8 @@ from os import getenv, mkdir, path
 from dotenv import find_dotenv, load_dotenv
 
 # Load environment variables from .env file
-if not find_dotenv():
-    raise FileNotFoundError("The .env file is missing.")
-load_dotenv()
+if not load_dotenv():
+    raise OSError("The env variables are missing.")
 
 
 # Get the directory of the current script
