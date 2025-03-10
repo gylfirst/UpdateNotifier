@@ -25,5 +25,5 @@ jobs:
                 uses: docker/build-push-action@v6
                 with:
                     push: true
-                    tags: gylfirst/updatenotifier:latest,gylfirst/updatenotifier:v${{ github.run_number }}.0
-                    platforms: linux/amd64, linux/arm/v7, linux/arm64
+                    tags: gylfirst/updatenotifier:latest,gylfirst/updatenotifier:v0.${{ github.run_number }}
+                    platforms: linux/amd64
