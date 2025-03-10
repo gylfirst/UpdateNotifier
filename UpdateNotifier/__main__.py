@@ -50,7 +50,9 @@ async def main() -> list[dict[str, str]]:
     for service in results:
         # Check if the service is new
         if service["name"] not in versions_list:
-            logger.info(f"New service found: {service['name']}, writing the latest version...")
+            logger.info(
+                f"New service found: {service['name']}, writing the latest version: {service['version']}"
+            )
             # Write the new version to the file
             write_versions(f"{service['name']}", f"{service['version']}")
             # Add the new service to the list

@@ -1,6 +1,6 @@
 import logging
 from logging.handlers import RotatingFileHandler
-from os import getenv, path
+from os import getenv, mkdir, path
 
 from dotenv import find_dotenv, load_dotenv
 
@@ -12,6 +12,13 @@ load_dotenv()
 
 # Get the directory of the current script
 base_dir = path.dirname(path.abspath(__file__))
+
+# Check if the folders exist, if not create them
+if not path.isdir(path.join(base_dir, "../data")):
+    mkdir(path.join(base_dir, "../data"))
+if not path.isdir(path.join(base_dir, "../logs")):
+    mkdir(path.join(base_dir, "../logs"))
+
 
 # Define file paths for services, versions and logs
 services_file = path.join(base_dir, "../data/services.txt")
