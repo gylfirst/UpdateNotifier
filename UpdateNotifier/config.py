@@ -2,12 +2,10 @@ import logging
 from logging.handlers import RotatingFileHandler
 from os import getenv, mkdir, path
 
-from dotenv import find_dotenv, load_dotenv
+from dotenv import load_dotenv
 
 # Load environment variables from .env file
-if not load_dotenv():
-    raise OSError("The env variables are missing.")
-
+load_dotenv()
 
 # Get the directory of the current script
 base_dir = path.dirname(path.abspath(__file__))
