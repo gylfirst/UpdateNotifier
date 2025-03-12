@@ -21,6 +21,10 @@ UpdateNotifier is a Python application that checks for the latest releases of sp
 
 You better have a virtual environment for your python installation. See [here](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/) in order to setup it.
 
+You can need a GitHub Personal Token in order to increase the rate limit for your requests. <br>
+Note that the rate without is 60 requests by hour, so if you have more services than this amount, you won't get all the version checks.<br>
+For that, go to your token settings ([link](https://github.com/settings/tokens)) and create a token without any permissions. You can change the expiration date if needed.
+
 ## Installation
 
 1. Clone the repository:
@@ -42,6 +46,7 @@ You better have a virtual environment for your python installation. See [here](h
     DISCORD_WEBHOOK_URL = "your discord webhook url"
     DISCORD_ROLE_ID = "discord id (int)"
     LOG_LEVEL = "INFO"  # Optional, default is INFO
+    GITHUB_TOKEN = "your github token"  # Optional, but you will have a rate limit of 60 requests per hour
     ```
 
     You can change the log level if needed.
@@ -69,6 +74,7 @@ You can edit the command argument to determine the time between the execution of
   - `DISCORD_WEBHOOK_URL`: The URL of the Discord webhook.
   - `DISCORD_ROLE_ID`: The ID of the Discord role to ping.
   - `LOG_LEVEL`: The logging level (optional, default is `INFO`).
+  - `GITHUB_TOKEN`: Your personal token to authentify your requests.
 
 - **Files**:
   - `data/services.txt`: List of GitHub repositories to monitor.
