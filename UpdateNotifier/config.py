@@ -26,6 +26,7 @@ log_file = path.join(base_dir, "../logs/app.log")
 webhook_url = getenv("DISCORD_WEBHOOK_URL")
 discord_role_id = getenv("DISCORD_ROLE_ID")
 log_level = getenv("LOG_LEVEL", "INFO")
+github_token = getenv("GITHUB_TOKEN")
 
 
 def check_env() -> None:

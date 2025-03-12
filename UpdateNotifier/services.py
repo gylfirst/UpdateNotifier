@@ -2,7 +2,7 @@ from asyncio import gather
 
 from aiohttp import ClientError, ClientSession
 
-from UpdateNotifier.config import logger
+from UpdateNotifier.config import github_token, logger
 
 api_github = "https://api.github.com/repos"
 
@@ -57,7 +57,15 @@ async def fetch_all_versions(services_list: list[str]) -> list[dict[str, str]]:
 
     :return results: List of dictionaries with the service name, version and url.
     """
-    async with ClientSession() as session:
+    if not github_token:
+        logger.info(
+            "GITHUB_TOKEN is not set. Requests will be made without authentication and may be rate limited."
+        )
+        auth_headers = {}
+    else:
+        auth_headers = {"Authorization": f"token {github_token}"}
+
+    async with ClientSession(headers=auth_headers) as session:
         results = await gather(
             *[get_latest_version(session, service) for service in services_list],
             return_exceptions=True,
