@@ -13,7 +13,7 @@ UpdateNotifier is a Python application that checks for the latest releases of sp
 
 ## Requirements
 
-- Python 3.10 or higher
+- Python 3.11 or higher
 - `aiohttp`
 - `asyncio`
 - `discord-webhook`
