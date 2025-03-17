@@ -8,10 +8,10 @@ WORKDIR /app
 COPY . /app
 
 # Install any needed packages specified in requirements.txt
-RUN pip install --no-cache-dir -r requirements.txt
+# If platform is arm then we add the piwheels index for prebuilt arm wheels
+RUN if [ $(uname -m | cut -c 1-3) = "arm" ]; then \
+    echo -e "[global]\nextra-index-url=https://www.piwheels.org/simple" > /usr/local/pip.conf; fi && \
+    pip --no-cache-dir install -r requirements.txt --prefer-binary
 
-# Make the entrypoint script executable
-RUN chmod +x entrypoint.sh
-
-# Run the entrypoint script
-ENTRYPOINT ["./entrypoint.sh"]
+# Run the app
+CMD [ "python3", "-m", "UpdateNotifier" ]

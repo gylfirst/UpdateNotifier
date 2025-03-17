@@ -22,7 +22,7 @@ UpdateNotifier is a Python application that checks for the latest releases of sp
 You better have a virtual environment for your python installation. See [here](https://packaging.python.org/en/latest/guides/installing-using-pip-and-virtual-environments/) in order to setup it.
 
 You can need a GitHub Personal Token in order to increase the rate limit for your requests. <br>
-Note that the rate without is 60 requests by hour, so if you have more services than this amount, you won't get all the version checks.<br>
+Note that the rate without is 60 requests by hour, so if you have more services than this amount, you won't get all the version checks. <br>
 For that, go to your token settings ([link](https://github.com/settings/tokens)) and create a token without any permissions. You can change the expiration date if needed.
 
 ## Installation
@@ -65,8 +65,8 @@ For that, go to your token settings ([link](https://github.com/settings/tokens))
 
 ### Docker
 
-You can use the [docker image](https://hub.docker.com/r/gylfirst/updatenotifier) with the docker compose file.  
-You can edit the command argument to determine the time between the execution of the app. This time is in seconds.
+You can use the [docker image](https://hub.docker.com/r/gylfirst/updatenotifier) with the docker compose file. <br>
+The app is designed to be launched once, so you can set up a cronjob or a script to execute it regularly.
 
 ## Configuration
 
@@ -74,7 +74,7 @@ You can edit the command argument to determine the time between the execution of
   - `DISCORD_WEBHOOK_URL`: The URL of the Discord webhook.
   - `DISCORD_ROLE_ID`: The ID of the Discord role to ping.
   - `LOG_LEVEL`: The logging level (optional, default is `INFO`).
-  - `GITHUB_TOKEN`: Your personal token to authentify your requests.
+  - `GITHUB_TOKEN`: Your personal token to authenticate your requests.
 
 - **Files**:
   - `data/services.txt`: List of GitHub repositories to monitor.

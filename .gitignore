@@ -17,7 +17,6 @@
 !Dockerfile
 !.dockerignore
 !docker-compose.yaml.example
-!entrypoint.sh
 
 # exclude CI/CD files
 !.github/
