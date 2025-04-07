@@ -1,6 +1,6 @@
 from discord_webhook import DiscordEmbed, DiscordWebhook
 
-from UpdateNotifier.config import discord_role_id, logger, webhook_url
+from UpdateNotifier.config import discord_role_id, logger, ping, webhook_url
 
 # Discord Limits
 MAX_FIELDS_PER_EMBED = 25  # Discord allows max 25 fields per embed
@@ -14,7 +14,16 @@ def send_discord_notification(results: list[dict[str, str]]) -> None:
     :param results: List of services with new updates
     :type results: list[dict[str, str]]
     """
-    webhook = DiscordWebhook(url=webhook_url, content=f"<@&{discord_role_id}>\n")
+    # If ping all is enabled, add the role mention to the content
+    if ping and discord_role_id != "":
+        logger.debug("Pinging Discord role.")
+        webhook = DiscordWebhook(url=webhook_url, content=f"<@&{discord_role_id}>\n")
+    else:
+        if discord_role_id != "":
+            logger.debug("Discord role ID is set but pinging is disabled.")
+        else:
+            logger.debug("Not pinging Discord role.")
+        webhook = DiscordWebhook(url=webhook_url)
 
     # Split results into batches of MAX_FIELDS_PER_EMBED
     for i in range(0, len(results), MAX_FIELDS_PER_EMBED):
