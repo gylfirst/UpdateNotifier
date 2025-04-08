@@ -27,7 +27,7 @@ webhook_url = getenv("DISCORD_WEBHOOK_URL")
 discord_role_id = getenv("DISCORD_ROLE_ID")
 log_level = getenv("LOG_LEVEL", "INFO")
 github_token = getenv("GITHUB_TOKEN")
-ping = getenv("ENABLE_PING", "True").lower() in ("true", "1", "yes")
+ping = getenv("ALLOW_PING", "True").lower() in ("true", "1", "yes")
 
 
 def check_env() -> None:
