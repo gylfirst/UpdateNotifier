@@ -5,7 +5,7 @@ from os import getenv, mkdir, path
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
-load_dotenv()
+load_dotenv(override=True)
 
 # Get the directory of the current script
 base_dir = path.dirname(path.abspath(__file__))
@@ -28,6 +28,7 @@ discord_role_id = getenv("DISCORD_ROLE_ID")
 log_level = getenv("LOG_LEVEL", "INFO")
 github_token = getenv("GITHUB_TOKEN")
 ping = getenv("ALLOW_PING", "True").lower() in ("true", "1", "yes")
+ping_all_releases = getenv("ALLOW_ALL_RELEASES_PING", "False").lower() in ("true", "1", "yes")
 
 
 def check_env() -> None:

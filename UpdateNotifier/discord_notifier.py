@@ -6,23 +6,34 @@ from UpdateNotifier.config import discord_role_id, logger, ping, webhook_url
 MAX_FIELDS_PER_EMBED = 25  # Discord allows max 25 fields per embed
 
 
-def send_discord_notification(results: list[dict[str, str]]) -> None:
+def send_discord_notification(results: list[dict[str, str]], ping_user: bool) -> None:
     """
     Send a Discord notification with the list of services that have new updates.
     Splits messages into multiple embeds if necessary.
 
     :param results: List of services with new updates
     :type results: list[dict[str, str]]
+    :param ping_user: Boolean indicating if the user should be pinged
+    :type ping_user: bool
     """
     # If ping all is enabled, add the role mention to the content
-    if ping and discord_role_id != "":
-        logger.debug("Pinging Discord role.")
-        webhook = DiscordWebhook(url=webhook_url, content=f"<@&{discord_role_id}>\n")
-    else:
-        if discord_role_id != "":
-            logger.debug("Discord role ID is set but pinging is disabled.")
+    if ping:
+        logger.debug("Ping is enabled.")
+        if discord_role_id != "" and ping_user:
+            logger.debug("Pinging Discord role.")
+            webhook = DiscordWebhook(url=webhook_url, content=f"<@&{discord_role_id}>\n")
         else:
-            logger.debug("Not pinging Discord role.")
+            if not ping_user:
+                logger.debug("No major updates found.")
+            else:
+                logger.debug("No role ID is set.")
+            webhook = DiscordWebhook(url=webhook_url)
+    else:
+        logger.debug("Ping is disabled.")
+        if discord_role_id != "":
+            logger.debug("Discord role ID is set.")
+        if not ping_user:
+            logger.debug("No major updates found, or no new services found.")
         webhook = DiscordWebhook(url=webhook_url)
 
     # Split results into batches of MAX_FIELDS_PER_EMBED

@@ -48,7 +48,8 @@ For that, go to your token settings ([link](https://github.com/settings/tokens))
     DISCORD_ROLE_ID = "discord id (int)"
     LOG_LEVEL = "INFO"  # Optional, default is INFO
     GITHUB_TOKEN = "your github token"  # Optional, but you will have a rate limit of 60 requests per hour
-    ENABLE_PING = False # Optional, default if True
+    ALLOW_PING = True # Optional, default if True
+    ALLOW_ALL_RELEASES_PING = False # Optional, default is False 
     ```
 
     You can change the log level if needed.
@@ -77,7 +78,8 @@ The app is designed to be launched once, so you can set up a cronjob or a script
   - `DISCORD_ROLE_ID`: The ID of the Discord role to ping.
   - `LOG_LEVEL`: The logging level (optional, default is `INFO`).
   - `GITHUB_TOKEN`: Your personal token to authenticate your requests.
-  - `ENABLE_PING`: Allow the app to ping a role for the notification (default is `True`).
+  - `ALLOW_PING`: Allow the app to ping a role for the notification (default is `True`).
+  - `ALLOW_ALL_RELEASES_PING`: Allow the app to ping for all releases, or just major ones (and strange versioning process)
 
 - **Files**:
   - `data/services.txt`: List of GitHub repositories to monitor.
