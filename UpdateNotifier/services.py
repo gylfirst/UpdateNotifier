@@ -1,4 +1,5 @@
 from asyncio import gather
+from re import match
 
 from aiohttp import ClientError, ClientSession
 
@@ -25,7 +26,7 @@ def get_service_info(service: dict) -> dict[str, str]:
     }
 
 
-async def get_latest_version(session: ClientSession, service: str) -> dict[str, str]:
+async def get_latest_version(session: ClientSession, service: str) -> dict[str, str] | None:
     """
     Fetches the latest version of a service using the GitHub API.
 
@@ -71,3 +72,35 @@ async def fetch_all_versions(services_list: list[str]) -> list[dict[str, str]]:
             return_exceptions=True,
         )
     return [result for result in results if result is not None]
+
+
+async def determine_if_major_update(
+    service: dict[str, str], versions_list: dict[str, str]
+) -> bool:
+    """
+    Determines if the update is a major update.
+
+    :param service: Dictionary with the service data (updated).
+    :type service: dict
+    :param versions_list: Dictionary with the current versions of the services.
+    :type versions_list: dict
+
+    :return bool: True if the update is a major update, False otherwise for classic versioning.
+    Else True (for strange versioning).
+    """
+    # Extract the current version from the versions_list and the new version from the service data
+    current_version = versions_list[service["name"]]
+    new_version = service["version"]
+    # Extract version numbers using regex
+    current_match = match(r"v?(\d+)\.?.*", current_version)
+    new_match = match(r"v?(\d+)\.?.*", new_version)
+
+    if current_match and new_match:
+        logger.debug(f"Found classic versioning for {service['name']}, comparing versions")
+        current_major = int(current_match.group(1))
+        new_major = int(new_match.group(1))
+        return new_major > current_major if current_major != new_major else False
+
+    # If regex doesn't find classic versioning, assume it is a major update
+    logger.debug(f"Found strange versioning for {service['name']}, assuming major update")
+    return True
