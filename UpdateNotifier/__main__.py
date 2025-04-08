@@ -1,10 +1,17 @@
 from asyncio import run
 from json import JSONDecodeError, load
 
-from UpdateNotifier.config import check_env, check_files, logger, services_file, versions_file
+from UpdateNotifier.config import (
+    check_env,
+    check_files,
+    logger,
+    ping_all_releases,
+    services_file,
+    versions_file,
+)
 from UpdateNotifier.data_io import write_versions
 from UpdateNotifier.discord_notifier import send_discord_notification
-from UpdateNotifier.services import fetch_all_versions
+from UpdateNotifier.services import determine_if_major_update, fetch_all_versions
 
 # Initialize the application
 logger.info("Initializing the application.")
@@ -35,12 +42,15 @@ except (OSError, JSONDecodeError) as e:
 
 
 # Main function
-async def main() -> list[dict[str, str]]:
+async def main() -> tuple[list[dict[str, str]], bool]:
     """
     Main function to fetch the latest versions of the services and compare with the stored versions."
 
     :return new_versions: List of dictionaries with the service name, version and url.
+    :return ping_user: Boolean indicating if the user should be pinged.
     """
+    # Define the ping_user variable with the value of ping_all_releases (defined in .env file)
+    ping_user = ping_all_releases
     logger.info("Starting to fetch latest versions.")
     # Fetch the latest versions of the services (formatted)
     results = await fetch_all_versions(services_list)
@@ -58,25 +68,37 @@ async def main() -> list[dict[str, str]]:
             # Add the new service to the list
             versions_list[service["name"]] = service["version"]
             new_versions.append(service)
-        # Check if the version is different
+            # Set ping_user to True if a new service is found, even if ping_all_releases is False
+            logger.debug("As a new service was found, all releases will be pinged.")
+            ping_user = True
+
         if service["version"] != versions_list[service["name"]]:
-            logger.info(
-                f"New version found for {service['name']}: {versions_list[service['name']]} -> {service['version']}"
-            )
+            # Compare the versions, determine if this is a major update or not
+            is_major = await determine_if_major_update(service, versions_list)
+            if is_major:
+                logger.debug(
+                    f"Major update found for {service['name']}: {versions_list[service['name']]} -> {service['version']}"
+                )
+                # Set ping_user to True if a major update is found
+                ping_user = True
+            else:
+                logger.debug(
+                    f"Minor update found for {service['name']}: {versions_list[service['name']]} -> {service['version']}"
+                )
             # Update the version in the file
             write_versions(f"{service['name']}", f"{service['version']}")
             # Add the new version to the list
             new_versions.append(service)
     # Return the new versions
-    return new_versions
+    return new_versions, ping_user
 
 
 # Run the main function and send notifications if new updates are found
 try:
-    results = run(main())
+    results, ping_user = run(main())
     # Send notifications if new updates are found
     if results:
-        send_discord_notification(results)
+        send_discord_notification(results, ping_user)
         logger.info("New updates found and notifications sent.")
     else:
         logger.info("No new updates found.")
