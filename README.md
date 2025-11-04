@@ -44,12 +44,12 @@ For that, go to your token settings ([link](https://github.com/settings/tokens))
 3. Rename the `.env.example` file in the root directory to `.env` and add your Discord webhook URL and role ID:
 
     ```properties
-    DISCORD_WEBHOOK_URL = "your discord webhook url"
-    DISCORD_ROLE_ID = "discord id (int)"
-    LOG_LEVEL = "INFO"  # Optional, default is INFO
-    GITHUB_TOKEN = "your github token"  # Optional, but you will have a rate limit of 60 requests per hour
-    ALLOW_PING = True # Optional, default if True
-    ALLOW_ALL_RELEASES_PING = False # Optional, default is False 
+    DISCORD_WEBHOOK_URL=your_discord_webhook_url
+    DISCORD_ROLE_ID=discord_id  # Integer
+    LOG_LEVEL=INFO  # Optional, default is INFO
+    GITHUB_TOKEN=your_github_token  # Optional, but you will have a rate limit of 60 requests per hour
+    ALLOW_PING=True # Optional, default if True
+    ALLOW_ALL_RELEASES_PING=False # Optional, default is False 
     ```
 
     You can change the log level if needed.
